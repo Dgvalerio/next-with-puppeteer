@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 const Home: NextPage = () => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<{ pais: string; capital: string; continente: string }[]>([]);
 
   useEffect(() => {
     fetch('/api/hello')
@@ -20,9 +20,15 @@ const Home: NextPage = () => {
 
       <main>
         <h1>NextJS with Puppeteer</h1>
-        <ul>
-          {items.map(({ name }) => (<li key={name}>{name}</li>))}
-        </ul>
+        <table>
+          {items.map(({ continente, pais, capital }) => (
+            <tr key={`${continente}-${pais}-${capital}`}>
+              <td>{continente}</td>
+              <td>{pais}</td>
+              <td>{capital}</td>
+            </tr>
+          ))}
+        </table>
       </main>
     </div>
   );
